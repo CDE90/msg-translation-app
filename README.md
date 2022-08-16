@@ -22,9 +22,11 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## To Do
 
-- [ ] Finish message component to show message content + user details + share link
-- [ ] Add message title field
-- [ ] Rename message text field to content
+- [x] Finish message component to show message content + user details + share link
+- [x] Add message title field
+- [x] Rename message text field to content
+- [x] Move away from SSR for `/message/[id]`
+- [ ] Add message md support
 - [ ] Add edit message functionality
 - [ ] Add delete message functionality
 - [ ] Add message list functionality (`/message`)

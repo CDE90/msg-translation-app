@@ -14,41 +14,42 @@ const CreateMsg: NextPage<Props> = ({ id }: Props) => {
         required: true,
     });
 
+    const defaultTitle = "Enter a title";
     const defaultMsg = "Type your message here";
 
-    const [msg, setMsg] = useState(defaultMsg);
+    const [title, setTitle] = useState("");
+    const [msg, setMsg] = useState("");
     const router = useRouter();
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleMsgChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMsg(e.target.value);
+    };
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (msg === "" || msg === defaultMsg) {
+        if (msg === "" || title === "") {
             return;
         }
 
-        const email =
-            session && session.user && session.user.email
-                ? session.user.email
-                : "";
-        const image =
-            session && session.user && session.user.image
-                ? session.user.image
-                : "";
-        const name =
-            session && session.user && session.user.name
-                ? session.user.name
-                : "";
+        const email = session?.user?.email ? session.user.email : "";
+        const image = session?.user?.image ? session.user.image : "";
+        const name = session?.user?.name ? session.user.name : "";
+        const provider = session?.account?.provider
+            ? session.account.provider
+            : "";
 
         const partialMessage: PartialMessage = {
-            text: msg,
+            title: title,
+            content: msg,
             user: {
                 email,
                 image,
                 name,
+                provider,
             },
         };
 
@@ -79,7 +80,24 @@ const CreateMsg: NextPage<Props> = ({ id }: Props) => {
             <p>New post id: {id}</p>
             {/* <LoginBtn /> */}
             <form onSubmit={handleSubmit}>
-                <textarea value={msg} onChange={handleChange} />
+                <label>
+                    Title
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={handleTitleChange}
+                        placeholder={defaultTitle}
+                    />
+                </label>
+
+                <label>
+                    Message
+                    <textarea
+                        value={msg}
+                        onChange={handleMsgChange}
+                        placeholder={defaultMsg}
+                    />
+                </label>
                 <input type="submit" value="Submit" />
             </form>
         </div>

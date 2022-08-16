@@ -1,57 +1,30 @@
 import { useRouter } from "next/router";
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import type { NextPage } from "next";
 import NavBar from "../../components/navbar";
-import type { Message } from "../../lib/db_tools";
-import { getMessage } from "../../lib/db_tools";
-import clientPromise from "../../lib/_mongodb";
 import MessageComponent from "../../components/message";
+import { useMessage } from "../../lib/client_tools";
 
-type Props = {
-    msg: Message;
-};
-
-const MsgPage: NextPage<Props> = ({ msg }: Props) => {
+const MsgPage: NextPage = () => {
     const router = useRouter();
     const { id } = router.query;
+
+    const { message, isLoading, isError } = useMessage(id as string);
+
+    if (isError) {
+        router.push("/");
+    } else if (isLoading) {
+        return <div>Loading...</div>;
+    } else if (!message) {
+        return <div>No message found</div>;
+    }
+
     return (
         <div>
             <NavBar />
-            <p>{id}</p>
-            <MessageComponent msg={msg} />
+            {/* <p>{id}</p> */}
+            <MessageComponent msg={message} />
         </div>
     );
-};
-
-export const getStaticPaths = async () => {
-    const client = await clientPromise;
-
-    const messages = await client
-        .db("messages")
-        .collection("messages")
-        .find({})
-        .toArray();
-    const paths = messages.map((message) => ({
-        params: {
-            id: message._id,
-        },
-    }));
-
-    return {
-        paths,
-        fallback: false,
-    };
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-    const id = context.params?.id as string;
-
-    const client = await clientPromise;
-
-    const message = await getMessage(id, client);
-
-    return {
-        props: { msg: message },
-    };
 };
 
 export default MsgPage;

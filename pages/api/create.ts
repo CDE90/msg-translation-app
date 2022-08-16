@@ -16,5 +16,15 @@ export default async function handler(
         return;
     }
 
-    res.status(200).json(await newMessage(msg, client));
+    try {
+        const message = await newMessage(msg, client);
+
+        res.status(200).json(message);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: "Unknown error" });
+        }
+    }
 }

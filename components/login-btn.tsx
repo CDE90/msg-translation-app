@@ -6,7 +6,8 @@ export default function LoginBtn() {
         return (
             <>
                 {/* @ts-ignore */}
-                Signed in as {session.user.email} using {session.user.provider}{" "}
+                Signed in as {session.user.email} using{" "}
+                {session?.account?.provider}{" "}
                 <button onClick={() => signOut()}>Sign out</button>
             </>
         );

@@ -1,6 +1,5 @@
-import type { MongoClient } from "mongodb";
+import { MongoClient } from "mongodb";
 import { nanoid } from "nanoid";
-import clientPromise from "./_mongodb";
 
 export async function newId(client: MongoClient): Promise<string> {
     const id = nanoid(13);
@@ -20,19 +19,22 @@ export async function newId(client: MongoClient): Promise<string> {
 
 export type PartialMessage = {
     _id?: string;
-    text: string;
+    title: string;
+    content: string;
     createdAt?: number;
     user: {
         email: string;
         image?: string;
         name: string;
+        provider: string;
     };
 };
 
 export type Message = PartialMessage & {
     _id: string;
     createdAt: number;
-    history?: [Message];
+    history?: Message;
+    isOwner?: boolean;
 };
 
 function convertDateToUTC(date: Date): number {
@@ -51,8 +53,15 @@ export async function newMessage(
     client: MongoClient
 ): Promise<Message> {
     try {
-        // const client = await clientPromise;
-
+        if (
+            partialMessage.title === undefined ||
+            partialMessage.content === undefined ||
+            partialMessage.user === undefined ||
+            partialMessage.user.email === undefined ||
+            partialMessage.user.name === undefined
+        ) {
+            throw new Error("Invalid message");
+        }
         const message: Message = {
             ...partialMessage,
             _id: await newId(client),
@@ -70,8 +79,12 @@ export async function newMessage(
 
 export async function getMessage(
     id: string,
-    client: MongoClient
+    client: MongoClient | Promise<MongoClient>
 ): Promise<Message> {
+    if (client instanceof Promise) {
+        client = await client;
+    }
+
     try {
         const db = client.db("messages");
         const collection = db.collection("messages");
@@ -80,15 +93,12 @@ export async function getMessage(
             throw new Error("Message not found");
         }
 
+        const r: any = result;
+        delete r._id;
+
         const message: Message = {
-            _id: result._id.toString(),
-            text: result.text,
-            createdAt: result.createdAt,
-            user: {
-                email: result.user.email,
-                image: result.user.image,
-                name: result.user.name,
-            },
+            _id: id,
+            ...r,
         };
         return message;
     } catch (error) {
