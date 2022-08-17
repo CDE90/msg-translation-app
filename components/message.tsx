@@ -1,6 +1,7 @@
-import type { Message } from "../lib/db_tools";
+import type { Message } from "../lib/DBTools";
 import { useState } from "react";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 
 type Props = {
     msg: Message;
@@ -10,17 +11,23 @@ export default function MessageComponent({ msg }: Props) {
     const [copyButton, setCopyButton] = useState("Copy Share Link");
 
     return (
-        <div id={msg._id}>
-            <h1>{msg.title}</h1>
-            <p>{msg.content}</p>
-            <p>{msg.user.name}</p>
-            <p>{msg.user.email}</p>
-            <Image
-                src={`${msg.user.image}`}
-                alt="profile"
-                width={50}
-                height={50}
-            />
+        <div id={msg._id} className="message-container">
+            <h1 className="message-title">{msg.title}</h1>
+            <ReactMarkdown children={msg.content} className="message-content" />
+            <div className="flex-container">
+                <h3 className="nav-profile-name">
+                    Author: {msg.user.name} ({msg.user.email})
+                </h3>
+                <div className="message-user-image">
+                    <Image
+                        src={`${msg.user.image}`}
+                        alt="profile"
+                        width={50}
+                        height={50}
+                    />
+                </div>
+            </div>
+
             <button
                 onClick={() => {
                     navigator.clipboard.writeText(
@@ -31,10 +38,11 @@ export default function MessageComponent({ msg }: Props) {
                         setCopyButton("Copy Share Link");
                     }, 1000);
                 }}
+                className="editor-submit-button"
             >
                 {copyButton}
             </button>
-            <p>Share Link: {`localhost:3000/message/${msg._id}`}</p>
+            {/* <p>Share Link: {`localhost:3000/message/${msg._id}`}</p> */}
         </div>
     );
 }

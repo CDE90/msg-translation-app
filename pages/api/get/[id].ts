@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import { getMessage, Message } from "../../../lib/db_tools";
+import { getMessage, Message } from "../../../lib/DBTools";
 import clientPromise from "../../../lib/_mongodb";
 
 export default async function handler(

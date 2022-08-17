@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import NavBar from "../../components/navbar";
 import MessageComponent from "../../components/message";
-import { useMessage } from "../../lib/client_tools";
+import { useMessage } from "../../lib/clientTools";
 
 const MsgPage: NextPage = () => {
     const router = useRouter();

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { newMessage } from "../../lib/db_tools";
+import { newMessage } from "../../lib/DBTools";
 import { getSession } from "next-auth/react";
 import clientPromise from "../../lib/_mongodb";
 

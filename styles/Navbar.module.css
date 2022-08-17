@@ -1,0 +1,25 @@
+.nav_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  height: 5rem;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  height: 10px;
+  width: auto;
+  margin: 5px;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.listItem {
+  list-style: none;
+  display: inline-block;
+  margin-right: 1rem;
+}

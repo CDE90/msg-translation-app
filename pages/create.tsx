@@ -1,37 +1,35 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { MarkedInput } from "../components/markedInput";
+import { Result } from "../components/result";
 import { useState } from "react";
-import { Message } from "../lib/db_tools";
-import type { PartialMessage } from "../lib/db_tools";
+import EditorContext from "../lib/editorContext";
+import type { DefaultContext } from "../lib/editorContext";
+import NavBar from "../components/navbar";
+import { useSession } from "next-auth/react";
+import type { PartialMessage, Message } from "../lib/DBTools";
+import { useRouter } from "next/router";
 
-type Props = {
-    id: string;
-};
-
-const CreateMsg: NextPage<Props> = ({ id }: Props) => {
+const markDownPage: NextPage = () => {
     const { data: session } = useSession({
         required: true,
     });
 
-    const defaultTitle = "Enter a title";
-    const defaultMsg = "Type your message here";
+    const [markdownText, setMarkdownText] = useState("");
+    const [markdownTitleText, setMarkdownTitleText] = useState("");
 
-    const [title, setTitle] = useState("");
-    const [msg, setMsg] = useState("");
     const router = useRouter();
 
-    const handleMsgChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setMsg(e.target.value);
-    };
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.target.value);
+    const contextValue: DefaultContext = {
+        markdownText,
+        setMarkdownText,
+        markdownTitleText,
+        setMarkdownTitleText,
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
 
-        if (msg === "" || title === "") {
+        if (markdownText === "" || markdownTitleText === "") {
             return;
         }
 
@@ -43,8 +41,8 @@ const CreateMsg: NextPage<Props> = ({ id }: Props) => {
             : "";
 
         const partialMessage: PartialMessage = {
-            title: title,
-            content: msg,
+            title: markdownTitleText,
+            content: markdownText,
             user: {
                 email,
                 image,
@@ -60,48 +58,30 @@ const CreateMsg: NextPage<Props> = ({ id }: Props) => {
             },
             body: JSON.stringify(partialMessage),
         })
-            .then((res) => res.json())
-            .catch((err) => console.error(err))
-            .finally(() => {
-                setMsg(defaultMsg);
-            }) as Promise<Message>;
+            .then(res => res.json())
+            .catch(err => console.error(err)) as Promise<Message>;
 
-        const id = message.then((message) => message._id);
+        const id = message.then(res => res._id);
 
-        id.then((id) => {
+        id.then(id => {
             router.push(`/message/${id}`);
-        }).catch((err) => console.error(err));
+        }).catch(err => console.error(err));
     };
 
     return (
-        <div>
-            <h1>CreateMsg</h1>
-            <p>This page requires authentication.</p>
-            <p>New post id: {id}</p>
-            {/* <LoginBtn /> */}
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Title
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={handleTitleChange}
-                        placeholder={defaultTitle}
-                    />
-                </label>
-
-                <label>
-                    Message
-                    <textarea
-                        value={msg}
-                        onChange={handleMsgChange}
-                        placeholder={defaultMsg}
-                    />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        </div>
+        <EditorContext.Provider value={contextValue}>
+            <NavBar />
+            <div className="editor-app-container">
+                <button className="editor-submit-button" onClick={handleSubmit}>
+                    Create New Message!
+                </button>
+                <div className="editor-container">
+                    <MarkedInput />
+                    <Result />
+                </div>
+            </div>
+        </EditorContext.Provider>
     );
 };
 
-export default CreateMsg;
+export default markDownPage;

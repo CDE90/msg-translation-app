@@ -22,20 +22,20 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## To Do
 
-- [x] Finish message component to show message content + user details + share link
-- [x] Add message title field
-- [x] Rename message text field to content
-- [x] Move away from SSR for `/message/[id]`
-- [ ] Add message md support
-- [ ] Add edit message functionality
-- [ ] Add delete message functionality
-- [ ] Add message list functionality (`/message`)
-- [ ] Add actual translation functionality using user locale (test code in `index.tsx`)
-- [ ] Style App
+-   [x] Finish message component to show message content + user details + share link
+-   [x] Add message title field
+-   [x] Rename message text field to content
+-   [x] Move away from SSR for `/message/[id]`
+-   [x] Add message md support
+-   [ ] Add edit message functionality
+-   [ ] Add delete message functionality
+-   [ ] Add message list functionality (`/message`)
+-   [ ] Add actual translation functionality using user locale (test code in `index.tsx`)
+-   [ ] Style App
 
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+-   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.

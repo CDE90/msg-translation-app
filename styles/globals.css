@@ -1,9 +1,21 @@
 html,
-body {
+body,
+body > div:first-child,
+div#__next,
+div#__next > div {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+:root {
+  --background-colour: rgb(255, 255, 255);
+  --nav-colour: rgb(201, 201, 201);
+  --message-colour: rgba(255, 255, 255, 0.385);
+  --highlight-colour: rgb(0, 0, 0);
 }
 
 a {
@@ -16,11 +28,192 @@ a {
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    --background-colour: rgb(40, 40, 40);
+    --nav-colour: rgb(9, 9, 9);
+    --message-colour: rgba(110, 110, 110, 0.385);
+    --highlight-colour: rgb(255, 255, 255);
+  }
   html {
     color-scheme: dark;
   }
   body {
-    color: white;
-    background: black;
+    color: var(--highlight-colour);
+    background: var(--background-colour);
   }
+}
+
+.editor-submit-button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.editor-submit-button:hover {
+  background-color: #45a049;
+}
+
+.editor-app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.editor-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.editor-input-container {
+  width: 50%;
+  height: 100%;
+  padding: 13px;
+  border-right: 1.5px solid var(--highlight-colour);
+  max-height: 100%;
+}
+
+.editor-input {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  background-color: transparent;
+  max-height: 100%;
+}
+
+.editor-input-title,
+.editor-result-title,
+.message-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1em;
+  padding: 8px 0;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 1px solid var(--highlight-colour);
+}
+
+.editor-result-container {
+  width: 50%;
+  height: 100%;
+  padding: 13px;
+}
+
+.editor-result {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  background-color: transparent;
+  overflow: scroll;
+  max-height: 100%;
+}
+
+.editor-md-field a {
+  color: #3737d0;
+}
+
+.editor-md-field a:hover {
+  text-decoration: underline;
+}
+
+table,
+th,
+td {
+  border: 1px solid (--highlight-colour);
+  border-collapse: collapse;
+  padding: 0.25rem;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  height: 5rem;
+  background-color: var(--nav-colour);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-logo {
+  margin: 5px;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.nav-list-item {
+  list-style: none;
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.nav-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--highlight-colour);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-right: 1rem;
+  font-size: 1rem;
+  background-color: transparent;
+  height: 100%;
+}
+.nav-button:hover {
+  background-color: var(--highlight-colour);
+  color: var(--background-colour);
+}
+
+.nav-profile-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.nav-profile-image {
+  margin: 5px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  margin: 15px;
+  border: 1px solid var(--highlight-colour);
+  border-radius: 5px;
+  background-color: var(--message-colour);
+}
+
+.message-content {
+  border-bottom: 1px solid var(--highlight-colour);
+}
+
+.message-user-image {
+  margin-left: 10px;
 }
