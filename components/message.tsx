@@ -2,6 +2,8 @@ import type { Message } from "../lib/DBTools";
 import { useState } from "react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import editIcon from "../public/edit-icon.svg";
+import deleteIcon from "../public/delete-icon.svg";
 
 type Props = {
     msg: Message;
@@ -42,7 +44,16 @@ export default function MessageComponent({ msg }: Props) {
             >
                 {copyButton}
             </button>
-            {/* <p>Share Link: {`localhost:3000/message/${msg._id}`}</p> */}
+            {msg.isOwner ? (
+                <div className="flex-container">
+                    <button className="message-edit-button">
+                        <Image src={editIcon} width={25} height={25} />
+                    </button>
+                    <button className="message-delete-button">
+                        <Image src={deleteIcon} width={25} height={25} />
+                    </button>
+                </div>
+            ) : null}
         </div>
     );
 }

@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
-import type { NextPage } from "next";
 import NavBar from "../../components/navbar";
 import MessageComponent from "../../components/message";
 import { useMessage } from "../../lib/clientTools";
 
-const MsgPage: NextPage = () => {
+const MsgPage = () => {
     const router = useRouter();
     const { id } = router.query;
 
@@ -12,17 +11,16 @@ const MsgPage: NextPage = () => {
 
     if (isError) {
         router.push("/");
+        return;
     } else if (isLoading) {
         return <div>Loading...</div>;
-    } else if (!message) {
-        return <div>No message found</div>;
     }
 
     return (
         <div>
             <NavBar />
-            {/* <p>{id}</p> */}
-            <MessageComponent msg={message} />
+            {message ? <MessageComponent msg={message} /> : null}
+            {/* <MessageComponent msg={message} /> */}
         </div>
     );
 };

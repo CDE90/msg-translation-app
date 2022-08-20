@@ -217,3 +217,37 @@ td {
 .message-user-image {
   margin-left: 10px;
 }
+
+.message-edit-button {
+  background-color: #0000ee;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 15px;
+  margin-left: auto;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.message-edit-button:hover {
+  background-color: #0000d0;
+}
+
+.message-delete-button {
+  background-color: #ee0000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 15px;
+  margin-left: 20px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.message-delete-button:hover {
+  background-color: #d00000;
+}

@@ -2,7 +2,12 @@ import { useContext, useState } from "react";
 import editorContext from "../lib/editorContext";
 
 export function MarkedInput() {
-    const { setMarkdownText, setMarkdownTitleText } = useContext(editorContext);
+    const {
+        setMarkdownText,
+        setMarkdownTitleText,
+        markdownText,
+        markdownTitleText,
+    } = useContext(editorContext);
 
     const onInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = e.currentTarget.value;
@@ -19,13 +24,14 @@ export function MarkedInput() {
             {/* <h1>Markdown Text</h1> */}
             <input
                 type={"text"}
-                // value={title}
+                value={markdownTitleText}
                 placeholder={"Enter a title"}
                 onChange={handleTitleChange}
                 className="editor-input-title"
             />
             <textarea
                 onChange={onInputChange}
+                value={markdownText}
                 className="editor-input"
                 placeholder={"Enter message content"}
             />

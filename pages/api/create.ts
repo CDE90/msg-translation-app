@@ -14,6 +14,13 @@ export default async function handler(
     if (!session) {
         res.status(401).json({ error: "Unauthorized" });
         return;
+    } else if (msg.user.email !== session?.user?.email ||
+        msg.user.provider !== session?.account?.provider) {
+        res.status(403).json({ error: "Forbidden" });
+        return;
+    } else if (!msg.title || !msg.content || !msg.user) {
+        res.status(400).json({ error: "Bad request" });
+        return;
     }
 
     try {
