@@ -17,10 +17,11 @@ export function Result() {
             />
             <div className="editor-result">
                 <ReactMarkdown
-                    children={markdownText}
                     remarkPlugins={[remarkGfm]}
                     className="editor-md-field"
-                />
+                >
+                    {markdownText}
+                </ReactMarkdown>
             </div>
         </div>
     );

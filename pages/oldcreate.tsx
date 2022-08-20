@@ -61,7 +61,7 @@ const CreateMsg: NextPage<Props> = ({ id }: Props) => {
             body: JSON.stringify(partialMessage),
         })
             .then(res => res.json())
-            .catch(err => console.error(err))
+            .catch(err => console.log(err))
             .finally(() => {
                 setMsg(defaultMsg);
             }) as Promise<Message>;
@@ -70,7 +70,7 @@ const CreateMsg: NextPage<Props> = ({ id }: Props) => {
 
         id.then(id => {
             router.push(`/message/${id}`);
-        }).catch(err => console.error(err));
+        }).catch(err => console.log(err));
     };
 
     return (
