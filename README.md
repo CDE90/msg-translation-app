@@ -27,11 +27,12 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 -   [x] Rename message text field to content
 -   [x] Move away from SSR for `/message/[id]`
 -   [x] Add message md support
--   [ ] Add edit message functionality
+-   [x] Add edit message functionality
 -   [ ] Add delete message functionality
 -   [ ] Add message list functionality (`/message`)
 -   [ ] Add actual translation functionality using user locale (test code in `index.tsx`)
 -   [ ] Style App
+-   [ ] Reintroduce SSR for `/message/[id]` and things
 
 ## Learn More
 
