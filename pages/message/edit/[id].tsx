@@ -75,7 +75,15 @@ const MarkDownPage = () => {
             },
         };
 
-        fetch(`${window.location.origin}/api/edit/${message._id}`, {
+        let origin: string;
+
+        if (window) {
+            origin = window.location.origin;
+        } else {
+            origin = "https://msg.ethancoward.dev";
+        }
+
+        fetch(`${origin}/api/edit/${message._id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -85,7 +93,7 @@ const MarkDownPage = () => {
             .then(res => res.json())
             .catch(err => console.log(err)) as Promise<Message>;
 
-        router.push(`${window.location.origin}/message/${id}`);
+        router.push(`${origin}/message/${id}`);
     };
 
     return (
