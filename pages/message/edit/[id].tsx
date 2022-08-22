@@ -17,7 +17,6 @@ const MarkDownPage = () => {
 
     const router = useRouter();
     const { id } = router.query;
-    console.log(window.location.origin);
 
     var { message, isLoading, isError: isE } = useMessage(id as string);
 
@@ -76,8 +75,8 @@ const MarkDownPage = () => {
 
         let origin: string;
 
-        if (process.env.NODE_ENV === "development") {
-            origin = "http://localhost:3000";
+        if (typeof window !== "undefined") {
+            origin = window.location.origin;
         } else {
             origin = "https://msg.ethancoward.dev";
         }
