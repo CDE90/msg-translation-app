@@ -76,8 +76,8 @@ const MarkDownPage = () => {
 
         let origin: string;
 
-        if (typeof window !== "undefined") {
-            origin = window.location.origin;
+        if (process.env.NODE_ENV === "development") {
+            origin = "http://localhost:3000";
         } else {
             origin = "https://msg.ethancoward.dev";
         }
