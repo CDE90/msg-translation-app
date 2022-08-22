@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useMessage } from "../../../lib/clientTools";
 import MsgPage from "../[id]";
 
-const markDownPage = () => {
+const MarkDownPage = () => {
     const { data: session } = useSession({
         required: true,
     });
@@ -82,7 +82,7 @@ const markDownPage = () => {
             body: JSON.stringify(partialMessage),
         })
             .then(res => res.json())
-            .catch(err => console.error(err)) as Promise<Message>;
+            .catch(err => console.log(err)) as Promise<Message>;
 
         router.push(`http://localhost:3000/message/${id}`);
     };
@@ -110,4 +110,4 @@ const markDownPage = () => {
     );
 };
 
-export default markDownPage;
+export default MarkDownPage;

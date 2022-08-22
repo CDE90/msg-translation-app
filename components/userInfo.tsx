@@ -4,10 +4,9 @@ import Image from "next/image";
 
 type Props = {
     session: Session | null;
-    showButton: boolean;
 };
 
-export default function UserInfo({ session, showButton }: Props) {
+export default function UserInfo({ session }: Props) {
     return (
         <>
             {session ? (

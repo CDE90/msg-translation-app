@@ -6,10 +6,13 @@ import type { DefaultContext } from "../lib/editorContext";
 
 export default function Editor() {
     const [markdownText, setMarkdownText] = useState("");
+    const [markdownTitleText, setMarkdownTitleText] = useState("");
 
     const contextValue: DefaultContext = {
         markdownText,
         setMarkdownText,
+        markdownTitleText,
+        setMarkdownTitleText,
     };
 
     return (

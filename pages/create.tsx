@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import type { PartialMessage, Message } from "../lib/DBTools";
 import { useRouter } from "next/router";
 
-const markDownPage: NextPage = () => {
+const MarkDownPage: NextPage = () => {
     const { data: session } = useSession({
         required: true,
     });
@@ -59,13 +59,13 @@ const markDownPage: NextPage = () => {
             body: JSON.stringify(partialMessage),
         })
             .then(res => res.json())
-            .catch(err => console.error(err)) as Promise<Message>;
+            .catch(err => console.log(err)) as Promise<Message>;
 
         const id = message.then(res => res._id);
 
         id.then(id => {
             router.push(`/message/${id}`);
-        }).catch(err => console.error(err));
+        }).catch(err => console.log(err));
     };
 
     return (
@@ -84,4 +84,4 @@ const markDownPage: NextPage = () => {
     );
 };
 
-export default markDownPage;
+export default MarkDownPage;

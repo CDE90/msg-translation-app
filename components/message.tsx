@@ -16,7 +16,9 @@ export default function MessageComponent({ msg }: Props) {
     return (
         <div id={msg._id} className="message-container">
             <h1 className="message-title">{msg.title}</h1>
-            <ReactMarkdown children={msg.content} className="message-content" />
+            <ReactMarkdown className="message-content">
+                {msg.content}
+            </ReactMarkdown>
             <div className="flex-container">
                 <h3 className="nav-profile-name">
                     Author: {msg.user.name} ({msg.user.email})
