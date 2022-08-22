@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import type { PartialMessage, Message } from "../../../lib/DBTools";
 import { useRouter } from "next/router";
 import { useMessage } from "../../../lib/clientTools";
+import MsgPage from "../[id]";
 
 const markDownPage = () => {
     const { data: session } = useSession({
@@ -18,18 +19,19 @@ const markDownPage = () => {
     const router = useRouter();
     const { id } = router.query;
 
-    var { message, isLoading, isError } = useMessage(id as string);
+    var { message, isLoading, isError: isE } = useMessage(id as string);
 
+    const [isError, setError] = useState(isE);
     const [markdownText, setMarkdownText] = useState("");
     const [markdownTitleText, setMarkdownTitleText] = useState("");
 
     useEffect(() => {
-        if (message) {
+        if (message && message.user) {
             if (
                 message.user.email !== session?.user?.email ||
                 message.user.provider !== session?.account?.provider
             ) {
-                isError = true;
+                setError(true);
                 return;
             } else {
                 setMarkdownText(message.content);
@@ -59,12 +61,7 @@ const markDownPage = () => {
             return;
         }
 
-        const email = session?.user?.email ? session.user.email : "";
-        const image = session?.user?.image ? session.user.image : "";
-        const name = session?.user?.name ? session.user.name : "";
-        const provider = session?.account?.provider
-            ? session.account.provider
-            : "";
+        const { email, image, name, provider } = message.user;
 
         const partialMessage: PartialMessage = {
             title: markdownTitleText,
@@ -77,7 +74,7 @@ const markDownPage = () => {
             },
         };
 
-        const message = fetch("api/create", {
+        fetch(`http://localhost:3000/api/edit/${message._id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -87,11 +84,7 @@ const markDownPage = () => {
             .then(res => res.json())
             .catch(err => console.error(err)) as Promise<Message>;
 
-        const id = message.then(res => res._id);
-
-        id.then(id => {
-            router.push(`/message/${id}`);
-        }).catch(err => console.error(err));
+        router.push(`http://localhost:3000/message/${id}`);
     };
 
     return (

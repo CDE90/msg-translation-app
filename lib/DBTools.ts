@@ -33,7 +33,6 @@ export type PartialMessage = {
 export type Message = PartialMessage & {
     _id: string;
     createdAt: number;
-    history?: Message;
     isOwner?: boolean;
 };
 
@@ -101,6 +100,33 @@ export async function getMessage(
             ...r,
         };
         return message;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function editMessage(
+    id: string,
+    message: PartialMessage,
+    client: MongoClient | Promise<MongoClient>
+) {
+    if (client instanceof Promise) {
+        client = await client;
+    }
+
+    try {
+        const db = client.db("messages");
+        const collection = db.collection("messages");
+        const update = {
+            $set: {
+                content: message.content,
+                title: message.title,
+            },
+        };
+        const result = await collection.updateOne({ _id: id }, update);
+        if (!result) {
+            throw new Error("error lol");
+        }
     } catch (error) {
         throw error;
     }

@@ -1,6 +1,7 @@
 import type { Message } from "../lib/DBTools";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import editIcon from "../public/edit-icon.svg";
 import deleteIcon from "../public/delete-icon.svg";
@@ -30,30 +31,40 @@ export default function MessageComponent({ msg }: Props) {
                 </div>
             </div>
 
-            <button
-                onClick={() => {
-                    navigator.clipboard.writeText(
-                        `http://localhost:3000/message/${msg._id}`
-                    );
-                    setCopyButton("Copied!");
-                    setTimeout(() => {
-                        setCopyButton("Copy Share Link");
-                    }, 1000);
-                }}
-                className="editor-submit-button"
-            >
-                {copyButton}
-            </button>
-            {msg.isOwner ? (
-                <div className="flex-container">
-                    <button className="message-edit-button">
-                        <Image src={editIcon} width={25} height={25} />
-                    </button>
-                    <button className="message-delete-button">
-                        <Image src={deleteIcon} width={25} height={25} />
-                    </button>
-                </div>
-            ) : null}
+            <div className="message-button-container">
+                <button
+                    onClick={() => {
+                        navigator.clipboard.writeText(
+                            `https://msg.ethancoward.dev/message/${msg._id}`
+                        );
+                        setCopyButton("Copied!");
+                        setTimeout(() => {
+                            setCopyButton("Copy Share Link");
+                        }, 1000);
+                    }}
+                    className="copy-link-button"
+                >
+                    {copyButton}
+                </button>
+                {msg.isOwner ? (
+                    <>
+                        <Link href={`/message/edit/${msg._id}`}>
+                            <a className="message-edit-button">
+                                <Image src={editIcon} width={25} height={25} />
+                            </a>
+                        </Link>
+                        <Link href={`api/delete/${msg._id}`}>
+                            <a className="message-delete-button">
+                                <Image
+                                    src={deleteIcon}
+                                    width={25}
+                                    height={25}
+                                />
+                            </a>
+                        </Link>
+                    </>
+                ) : null}
+            </div>
         </div>
     );
 }

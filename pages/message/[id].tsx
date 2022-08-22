@@ -12,15 +12,16 @@ const MsgPage = () => {
     if (isError) {
         router.push("/");
         return;
-    } else if (isLoading) {
-        return <div>Loading...</div>;
     }
 
     return (
         <div>
             <NavBar />
-            {message ? <MessageComponent msg={message} /> : null}
-            {/* <MessageComponent msg={message} /> */}
+            {!isLoading && message ? (
+                <MessageComponent msg={message} />
+            ) : (
+                <div>Loading...</div>
+            )}
         </div>
     );
 };
