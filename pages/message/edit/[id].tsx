@@ -18,6 +18,7 @@ const MarkDownPage = () => {
 
     const router = useRouter();
     const { id } = router.query;
+    console.log(window.location.origin);
 
     var { message, isLoading, isError: isE } = useMessage(id as string);
 
@@ -74,7 +75,7 @@ const MarkDownPage = () => {
             },
         };
 
-        fetch(`http://localhost:3000/api/edit/${message._id}`, {
+        fetch(`${window.location.origin}/api/edit/${message._id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -84,7 +85,7 @@ const MarkDownPage = () => {
             .then(res => res.json())
             .catch(err => console.log(err)) as Promise<Message>;
 
-        router.push(`http://localhost:3000/message/${id}`);
+        router.push(`${window.location.origin}/message/${id}`);
     };
 
     return (
