@@ -9,7 +9,6 @@ import { useSession } from "next-auth/react";
 import type { PartialMessage, Message } from "../../../lib/DBTools";
 import { useRouter } from "next/router";
 import { useMessage } from "../../../lib/clientTools";
-import MsgPage from "../[id]";
 
 const MarkDownPage = () => {
     const { data: session } = useSession({
@@ -77,7 +76,7 @@ const MarkDownPage = () => {
 
         let origin: string;
 
-        if (window) {
+        if (typeof window !== "undefined") {
             origin = window.location.origin;
         } else {
             origin = "https://msg.ethancoward.dev";
