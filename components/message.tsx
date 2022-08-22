@@ -37,7 +37,7 @@ export default function MessageComponent({ msg }: Props) {
                 <button
                     onClick={() => {
                         navigator.clipboard.writeText(
-                            `https://msg.ethancoward.dev/message/${msg._id}`
+                            `https://msg.ethancoward.dev/m/${msg._id}`
                         );
                         setCopyButton("Copied!");
                         setTimeout(() => {

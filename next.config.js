@@ -9,6 +9,11 @@ const nextConfig = {
                 destination: "/create",
                 permanent: true,
             },
+            {
+                source: "/m/:id",
+                destination: "/message/:id",
+                permanent: true,
+            },
         ];
     },
     images: {
